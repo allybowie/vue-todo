@@ -6,7 +6,16 @@
     </button>
     <form v-if="addToggle === true">
       <input type="text" placeholder="Task" v-model="newTask" />
-      <button @click.prevent="submitTask({ task: newTask, subtasks: [] })">
+      <input
+        type="text"
+        placeholder="Write smaller task steps seperated by a comma and a space here"
+        v-model="taskSteps"
+      />
+      <button
+        @click.prevent="
+          submitTask({ task: newTask, subtasks: splitTasks(taskSteps) })
+        "
+      >
         Add Task
       </button>
     </form>
@@ -21,6 +30,7 @@ import TaskCard from "../taskcard/taskcard";
 import store from "../store/store";
 import * as type from "../store/mutationtypes/types";
 import { mapState } from "vuex";
+const { splitTasks } = require("../utils/utils");
 
 export default {
   name: "TaskList",
@@ -28,7 +38,8 @@ export default {
   data() {
     return {
       addToggle: false,
-      newTask: ""
+      newTask: "",
+      taskSteps: ""
     };
   },
   computed: mapState({
@@ -37,6 +48,7 @@ export default {
     }
   }),
   methods: {
+    splitTasks,
     submitTask(addition) {
       this.newTask = "";
       setTimeout(() => (this.addToggle = false), 200);
