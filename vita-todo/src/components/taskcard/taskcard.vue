@@ -7,6 +7,7 @@
       class="TaskCheck"
       type="checkbox"
       @change="toggleComplete(task)"
+      :checked="this.task.complete"
       id="TaskCheck"
     />
     <SubTaskList
