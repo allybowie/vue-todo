@@ -4,12 +4,8 @@
       {{ addToggle ? "-" : "+" }}
     </button>
     <form v-if="addToggle === true">
-      <input type="text" placeholder="Task" v-model="newTask" />
-      <input
-        type="text"
-        placeholder="Write smaller task steps seperated by a comma and a space here"
-        v-model="taskSteps"
-      />
+      <input type="text" placeholder="Task" v-model="newTask" required />
+      <input type="text" placeholder="Steps" v-model="taskSteps" />
       <button
         @click.prevent="
           submitTask({
@@ -22,6 +18,13 @@
         Add Task
       </button>
     </form>
+    <p v-if="tasks.length === 0">
+      {{
+        addToggle
+          ? "Write a task and click 'Add' to submit a task. \n\n To split a task into individual steps, type the steps into the box on the right hand side, seperated by commas"
+          : "Your task list is empty. Click the button above to fill it up!"
+      }}
+    </p>
     <div class="TaskList">
       <article v-for="(task, idx) in tasks" :key="idx">
         <TaskCard :task="task" />

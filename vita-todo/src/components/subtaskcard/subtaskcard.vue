@@ -9,16 +9,6 @@
       @change="toggleComplete(mainTask, task)"
     />
   </div>
-  <!-- <div v-else class="SubTaskCard">
-    <p :class="{ 'is-checked': this.task.complete }">- {{ this.task.name }}</p>
-    <input
-      type="checkbox"
-      class="TaskCheck"
-      checked
-      id="TaskCheck"
-      @change="toggleComplete(this.mainTask, task)"
-    />
-  </div> -->
 </template>
 
 <script>
