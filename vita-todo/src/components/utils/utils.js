@@ -8,9 +8,33 @@ const grammarBro = taskString => {
 const splitTasks = subtaskString => {
   const array = subtaskString === "" ? [] : subtaskString.split(", ");
   return array.map(element => {
-    // console.log(element);
     return { name: grammarBro(element).name, complete: false };
   });
 };
 
-module.exports = { splitTasks, grammarBro };
+const flipMainTaskComplete = task => {
+  task.complete = !task.complete;
+  task.subtasks.forEach(subtask => {
+    subtask.complete = task.complete;
+  });
+  return task;
+};
+
+const flipSubtaskComplete = (fullTask, subtask) => {
+  fullTask.subtasks = fullTask.subtasks.map(element => {
+    if (element.name === subtask) {
+      element.complete = !element.complete;
+      return element;
+    }
+    return element;
+  });
+
+  return fullTask;
+};
+
+module.exports = {
+  splitTasks,
+  grammarBro,
+  flipMainTaskComplete,
+  flipSubtaskComplete
+};

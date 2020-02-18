@@ -16,7 +16,7 @@ export default {
   props: ["task", "complete", "label"],
   data() {
     return {
-      taskComplete: document.getElementById("TaskCheck").checked
+      taskComplete:
     };
   }
 };

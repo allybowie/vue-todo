@@ -1,5 +1,16 @@
 const { expect } = require("chai");
-const { splitTasks, grammarBro } = require("./utils");
+const {
+  splitTasks,
+  grammarBro,
+  flipMainTaskComplete,
+  flipSubtaskComplete
+} = require("./utils");
+const {
+  incomplete,
+  incompleteTwo,
+  incompleteThree,
+  incompleteFour
+} = require("./testdata");
 
 //Split Tasks
 describe("splitTasks will split a string of subtasks seperated by commas into an array", () => {
@@ -40,6 +51,60 @@ describe("Grammar Bro: Makes sure the first letter of the task is uppercase", ()
     expect(grammarBro("test string of task")).to.eql({
       name: "Test string of task",
       complete: false
+    });
+  });
+});
+
+//mark task and all subtasks to complete
+describe("Flip the 'Complete' status of a task and all of its subtasks", () => {
+  it("returns an object", () => {
+    expect(flipMainTaskComplete(incomplete)).to.be.an("object");
+  });
+  it("returns an object with the keys 'task', 'subtasks', 'complete'", () => {
+    expect(flipMainTaskComplete(incomplete)).to.contain.all.keys([
+      "task",
+      "complete",
+      "subtasks"
+    ]);
+  });
+  it("returns an object where the 'complete' boolean is flipped", () => {
+    expect(flipMainTaskComplete(incomplete).complete).to.eql(true);
+  });
+  it("keeps the subtasks in an array", () => {
+    expect(flipMainTaskComplete(incomplete).subtasks).to.be.an("array");
+    expect(flipMainTaskComplete(incomplete).subtasks).to.have.length(2);
+  });
+  it("flips the complete booleans of all subtasks in the subtask key", () => {
+    expect(flipMainTaskComplete(incomplete).subtasks[0]).to.be.an("object");
+    expect(flipMainTaskComplete(incompleteTwo).subtasks[0].complete).to.eql(
+      true
+    );
+  });
+  it("returns all tasks as incomplete when the input main task is marked as complete", () => {
+    expect(flipMainTaskComplete(incompleteThree).complete).to.eql(false);
+    expect(flipMainTaskComplete(incompleteFour).subtasks[0].complete).to.eql(
+      false
+    );
+  });
+});
+
+describe.only("Flip the 'Completed' status of a single subtask", () => {
+  it("returns an object", () => {
+    expect(flipSubtaskComplete(incomplete, "First subtask")).to.be.an("object");
+  });
+  it("returns an object identical to the input object, but with one subtask's Completed status flipped", () => {
+    expect(
+      flipSubtaskComplete(incompleteTwo, "First subtask").subtasks[0].complete
+    ).to.eql(true);
+  });
+  it("flips the 'completed' status of the correct subtask", () => {
+    expect(flipSubtaskComplete(incompleteFour, "Second subtask")).to.eql({
+      task: "Test",
+      subtasks: [
+        { name: "First subtask", complete: true },
+        { name: "Second subtask", complete: true }
+      ],
+      complete: true
     });
   });
 });
