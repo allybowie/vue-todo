@@ -5,7 +5,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    tasks: [{ task: "First task", subtasks: [] }]
+    tasks: [{ task: "First task", subtasks: [], complete: false }]
   },
   actions: {
     add(context, payload) {

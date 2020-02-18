@@ -1,13 +1,15 @@
 const grammarBro = taskString => {
   const split = taskString.split("");
   split[0] = split[0].toUpperCase();
-  return split.join("");
+  const finalName = split.join("");
+  return { name: finalName, complete: false };
 };
 
 const splitTasks = subtaskString => {
   const array = subtaskString === "" ? [] : subtaskString.split(", ");
   return array.map(element => {
-    return grammarBro(element);
+    // console.log(element);
+    return { name: grammarBro(element).name, complete: false };
   });
 };
 

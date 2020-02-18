@@ -13,8 +13,9 @@
       <button
         @click.prevent="
           submitTask({
-            task: grammarBro(newTask),
-            subtasks: splitTasks(taskSteps)
+            task: grammarBro(newTask).name,
+            subtasks: splitTasks(taskSteps),
+            complete: false
           })
         "
       >
@@ -76,7 +77,7 @@ export default {
   display: flex;
   flex-direction: column;
   overflow: scroll;
-  height: 450px;
+  height: 400px;
 }
 
 .AddButton {

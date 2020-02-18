@@ -19,24 +19,27 @@ describe("splitTasks will split a string of subtasks seperated by commas into an
   it("Makes sure there is no whitespace at the start of each element in the returned array", () => {
     const testTasks = splitTasks("example small task, second task, third task");
     expect(testTasks).to.have.length(3);
-    expect(testTasks[1]).to.eql("Second task");
+    expect(testTasks[1]).to.eql({ name: "Second task", complete: false });
   });
-  it("Ensures each subtask begins with an uppercase letter", () => {
+  it("Ensures each subtask name begins with an uppercase letter", () => {
     const testTasks = splitTasks("example small task, second task, third task");
     expect(testTasks).to.have.length(3);
-    expect(testTasks[1]).to.eql("Second task");
+    expect(testTasks[1]).to.eql({ name: "Second task", complete: false });
   });
 });
 
 // Grammar Bro
 describe("Grammar Bro: Makes sure the first letter of the task is uppercase", () => {
-  it("returns a string", () => {
-    expect(grammarBro("test")).to.be.a("string");
+  it("returns an object", () => {
+    expect(grammarBro("test")).to.be.an("object");
   });
   it("returns the correct uppercase letter at the start of the task", () => {
-    expect(grammarBro("test")).to.eql("Test");
+    expect(grammarBro("test")).to.eql({ name: "Test", complete: false });
   });
   it("Only affects the first word in the task", () => {
-    expect(grammarBro("test string of task")).to.eql("Test string of task");
+    expect(grammarBro("test string of task")).to.eql({
+      name: "Test string of task",
+      complete: false
+    });
   });
 });
