@@ -1,8 +1,7 @@
 <template>
   <div>
-    <h1>Task List</h1>
-    <button v-on:click="addToggle = !addToggle">
-      {{ addToggle ? "Close Task Adder" : "Open Task Adder" }}
+    <button v-on:click="addToggle = !addToggle" class="AddButton">
+      {{ addToggle ? "-" : "+" }}
     </button>
     <form v-if="addToggle === true">
       <input type="text" placeholder="Task" v-model="newTask" />
@@ -13,15 +12,20 @@
       />
       <button
         @click.prevent="
-          submitTask({ task: newTask, subtasks: splitTasks(taskSteps) })
+          submitTask({
+            task: grammarBro(newTask),
+            subtasks: splitTasks(taskSteps)
+          })
         "
       >
         Add Task
       </button>
     </form>
-    <article v-for="(task, idx) in tasks" :key="idx">
-      <TaskCard :task="task" />
-    </article>
+    <div class="TaskList">
+      <article v-for="(task, idx) in tasks" :key="idx">
+        <TaskCard :task="task" />
+      </article>
+    </div>
   </div>
 </template>
 
@@ -30,7 +34,7 @@ import TaskCard from "../taskcard/taskcard";
 import store from "../store/store";
 import * as type from "../store/mutationtypes/types";
 import { mapState } from "vuex";
-const { splitTasks } = require("../utils/utils");
+const { splitTasks, grammarBro } = require("../utils/utils");
 
 export default {
   name: "TaskList",
@@ -48,9 +52,11 @@ export default {
     }
   }),
   methods: {
+    grammarBro,
     splitTasks,
     submitTask(addition) {
       this.newTask = "";
+      this.taskSteps = "";
       setTimeout(() => (this.addToggle = false), 200);
       setTimeout(
         () =>
@@ -64,3 +70,24 @@ export default {
   }
 };
 </script>
+
+<style>
+.TaskList {
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+  height: 450px;
+}
+
+.AddButton {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+  font-size: 40px;
+  display: table-cell;
+}
+
+.AddButton:focus {
+  outline: 0;
+}
+</style>

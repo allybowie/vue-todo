@@ -1,8 +1,10 @@
 <template>
   <div id="app">
-    <Date />
-    <Header />
-    <TaskList />
+    <div class="Content">
+      <Date />
+      <Header />
+      <TaskList />
+    </div>
   </div>
 </template>
 
@@ -23,7 +25,13 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: rgb(34, 0, 185);
   margin-top: 60px;
+  display: grid;
+  grid-template-columns: 35% auto 35%;
+}
+
+.Content {
+  grid-column: 2/3;
 }
 </style>
