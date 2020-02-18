@@ -2,14 +2,7 @@
   <div id="app">
     <Date />
     <Header />
-    <button v-on:click="addToggle = !addToggle">
-      {{ addToggle ? "Close Task Adder" : "Open Task Adder" }}
-    </button>
-    <form v-if="addToggle === true">
-      <input type="text" placeholder="Task" />
-    </form>
     <TaskList />
-    <AddTask />
   </div>
 </template>
 
@@ -20,19 +13,7 @@ import TaskList from "./components/tasklist/tasklist";
 
 export default {
   name: "App",
-  components: { Header, Date, TaskList },
-  data() {
-    return {
-      tasks: [
-        {
-          task: "Make to do list",
-          subtasks: ["Create Vue App", "Make it functional"]
-        }
-      ],
-      addToggle: false,
-      addIcon: "+"
-    };
-  }
+  components: { Header, Date, TaskList }
 };
 </script>
 

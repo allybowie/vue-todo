@@ -1,7 +1,7 @@
 <template>
   <div>
     <p>{{ this.task.task }}</p>
-    <input type="checkbox" v-model="taskComplete" />
+    <input type="checkbox" @change="taskComplete = !taskComplete" />
     <SubTaskList
       v-if="this.task.subtasks.length > 0"
       :subtasks="this.task.subtasks"
