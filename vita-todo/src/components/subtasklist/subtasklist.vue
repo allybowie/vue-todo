@@ -1,7 +1,7 @@
 <template>
   <div>
     <article v-for="(task, idx) in this.subtasks" :key="idx">
-      <SubTaskCard :task="task" :complete="complete" />
+      <SubTaskCard :task="task" :complete="complete" :mainTask="mainTask" />
     </article>
   </div>
 </template>
@@ -10,7 +10,7 @@
 import SubTaskCard from "../subtaskcard/subtaskcard";
 export default {
   name: "SubTaskList",
-  props: ["subtasks", "complete"],
+  props: ["subtasks", "complete", "mainTask"],
   components: { SubTaskCard }
 };
 </script>

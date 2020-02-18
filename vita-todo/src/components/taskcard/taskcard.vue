@@ -1,24 +1,26 @@
 <template>
   <div class="TaskCard">
-    <p :class="{ 'is-checked': taskComplete }" id="MainTask">
+    <p :class="{ 'is-checked': this.task.complete }" id="MainTask">
       {{ this.task.task }}
     </p>
     <input
       class="TaskCheck"
       type="checkbox"
-      @change="taskComplete = !taskComplete"
+      @change="toggleComplete(task)"
       id="TaskCheck"
     />
     <SubTaskList
       v-if="this.task.subtasks.length > 0"
       :subtasks="this.task.subtasks"
-      :complete="taskComplete"
+      :mainTask="this.task"
     />
   </div>
 </template>
 
 <script>
 import SubTaskList from "../subtasklist/subtasklist";
+import store from "../store/store";
+import * as type from "../store/mutationtypes/types";
 
 export default {
   name: "TaskCard",
@@ -28,6 +30,15 @@ export default {
     return {
       taskComplete: false
     };
+  },
+  methods: {
+    toggleComplete(task) {
+      console.log(task);
+      store.dispatch({
+        type: type.ToggleTaskComplete,
+        editedTask: task
+      });
+    }
   }
 };
 </script>

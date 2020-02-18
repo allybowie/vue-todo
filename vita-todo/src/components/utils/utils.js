@@ -29,6 +29,16 @@ const flipSubtaskComplete = (fullTask, subtask) => {
     return element;
   });
 
+  const isNotComplete = fullTask.subtasks.filter(element => {
+    if (element.complete === true) return element;
+  });
+
+  if (isNotComplete.length === fullTask.subtasks.length) {
+    fullTask.complete = true;
+  } else {
+    fullTask.complete = false;
+  }
+
   return fullTask;
 };
 

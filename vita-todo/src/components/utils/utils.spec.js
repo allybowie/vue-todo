@@ -9,7 +9,12 @@ const {
   incomplete,
   incompleteTwo,
   incompleteThree,
-  incompleteFour
+  incompleteFour,
+  incompleteFive,
+  incompleteSix,
+  incompleteSeven,
+  incompleteEight,
+  incompleteNine
 } = require("./testdata");
 
 //Split Tasks
@@ -94,17 +99,47 @@ describe.only("Flip the 'Completed' status of a single subtask", () => {
   });
   it("returns an object identical to the input object, but with one subtask's Completed status flipped", () => {
     expect(
-      flipSubtaskComplete(incompleteTwo, "First subtask").subtasks[0].complete
+      flipSubtaskComplete(incompleteSix, "First subtask").subtasks[0].complete
     ).to.eql(true);
   });
   it("flips the 'completed' status of the correct subtask", () => {
-    expect(flipSubtaskComplete(incompleteFour, "Second subtask")).to.eql({
+    expect(flipSubtaskComplete(incompleteFive, "Second subtask")).to.eql({
       task: "Test",
       subtasks: [
         { name: "First subtask", complete: true },
         { name: "Second subtask", complete: true }
       ],
       complete: true
+    });
+  });
+  it("completes the main task is all subtasks are complete", () => {
+    expect(flipSubtaskComplete(incompleteSeven, "Second subtask")).to.eql({
+      task: "Test",
+      subtasks: [
+        { name: "First subtask", complete: true },
+        { name: "Second subtask", complete: true }
+      ],
+      complete: true
+    });
+  });
+  it("unmarks the main task as completed if a completed subtask is unchecked", () => {
+    expect(flipSubtaskComplete(incompleteEight, "Second subtask")).to.eql({
+      task: "Test",
+      subtasks: [
+        { name: "First subtask", complete: true },
+        { name: "Second subtask", complete: false }
+      ],
+      complete: false
+    });
+  });
+  it("doesn't change the status of the main task if one out of two subtasks becomes true", () => {
+    expect(flipSubtaskComplete(incompleteNine, "Second subtask")).to.eql({
+      task: "Test",
+      subtasks: [
+        { name: "First subtask", complete: false },
+        { name: "Second subtask", complete: true }
+      ],
+      complete: false
     });
   });
 });

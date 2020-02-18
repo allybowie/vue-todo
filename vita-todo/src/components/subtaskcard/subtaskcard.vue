@@ -1,23 +1,49 @@
 <template>
-  <div v-if="complete === false" class="SubTaskCard">
-    <p :class="{ 'is-checked': taskComplete }">- {{ this.task.name }}</p>
-    <input type="checkbox" class="TaskCheck" id="TaskCheck" />
+  <div class="SubTaskCard">
+    <p :class="{ 'is-checked': this.task.complete }">- {{ this.task.name }}</p>
+    <input
+      type="checkbox"
+      class="TaskCheck"
+      id="TaskCheck"
+      :checked="this.task.complete"
+      @change="toggleComplete(mainTask, task)"
+    />
   </div>
-  <div v-else class="SubTaskCard">
-    <p class="is-checked">- {{ this.task.name }}</p>
-    <input type="checkbox" class="TaskCheck" checked id="TaskCheck" />
-  </div>
+  <!-- <div v-else class="SubTaskCard">
+    <p :class="{ 'is-checked': this.task.complete }">- {{ this.task.name }}</p>
+    <input
+      type="checkbox"
+      class="TaskCheck"
+      checked
+      id="TaskCheck"
+      @change="toggleComplete(this.mainTask, task)"
+    />
+  </div> -->
 </template>
 
 <script>
-// let elementCheckBox = document.getElementById("TaskCheck");
+import store from "../store/store";
+import * as type from "../store/mutationtypes/types";
+
+// v-if="this.task.complete === false"
+
 export default {
   name: "SubTaskCard",
-  props: ["task", "complete", "label"],
+  props: ["task", "complete", "label", "mainTask"],
   data() {
     return {
-      taskComplete:
+      taskComplete: false
     };
+  },
+  methods: {
+    toggleComplete(higherTask, subtask) {
+      console.log("METHOD", higherTask, subtask);
+      store.dispatch({
+        type: type.ToggleSubtaskComplete,
+        editedTask: subtask,
+        mainTask: higherTask
+      });
+    }
   }
 };
 </script>

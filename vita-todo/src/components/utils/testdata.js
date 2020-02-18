@@ -31,4 +31,59 @@ const incompleteFour = {
   complete: true
 };
 
-module.exports = { incomplete, incompleteTwo, incompleteThree, incompleteFour };
+const incompleteFive = {
+  task: "Test",
+  subtasks: [
+    { name: "First subtask", complete: true },
+    { name: "Second subtask", complete: false }
+  ],
+  complete: false
+};
+
+const incompleteSix = {
+  task: "Test",
+  subtasks: [
+    { name: "First subtask", complete: false },
+    { name: "Second subtask", complete: false }
+  ],
+  complete: false
+};
+
+const incompleteSeven = {
+  task: "Test",
+  subtasks: [
+    { name: "First subtask", complete: true },
+    { name: "Second subtask", complete: false }
+  ],
+  complete: false
+};
+
+const incompleteEight = {
+  task: "Test",
+  subtasks: [
+    { name: "First subtask", complete: true },
+    { name: "Second subtask", complete: true }
+  ],
+  complete: true
+};
+
+const incompleteNine = {
+  task: "Test",
+  subtasks: [
+    { name: "First subtask", complete: false },
+    { name: "Second subtask", complete: false }
+  ],
+  complete: false
+};
+
+module.exports = {
+  incomplete,
+  incompleteTwo,
+  incompleteThree,
+  incompleteFour,
+  incompleteFive,
+  incompleteSix,
+  incompleteSeven,
+  incompleteEight,
+  incompleteNine
+};
