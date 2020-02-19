@@ -71,7 +71,6 @@ export default {
     },
     handleDelete(task) {
       const updatedTasks = deleteTask(store.state.tasks, task);
-      console.log("NEW TASK ARRAY", updatedTasks);
       store.dispatch({
         type: type.Delete,
         newTasks: updatedTasks
@@ -94,6 +93,10 @@ export default {
   grid-template-columns: auto 10%;
   grid-template-rows: 20px 100px, 100px, auto;
   margin-bottom: 10px;
+}
+
+.DeleteButton {
+  background-color: darkgrey;
 }
 
 .SubTaskList {
