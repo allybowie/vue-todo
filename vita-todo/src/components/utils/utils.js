@@ -21,6 +21,15 @@ const isTaskUnique = (newTask, stateTasks) => {
   return true;
 };
 
+const isStepUnique = (newTask, stateTasks) => {
+  const identicalTask = stateTasks.filter(element => {
+    return element.name === newTask.name;
+  });
+  if (identicalTask.length > 0) return false;
+
+  return true;
+};
+
 const flipMainTaskComplete = task => {
   task.complete = !task.complete;
   task.subtasks.forEach(subtask => {
@@ -52,7 +61,14 @@ const flipSubtaskComplete = (fullTask, subtask) => {
 };
 
 const addSteps = (task, steps) => {
-  task.subtasks = [...task.subtasks, ...splitTasks(steps)];
+  const splitSteps = splitTasks(steps);
+
+  const filteredSteps = splitSteps.filter(element => {
+    if (isStepUnique(element, task.subtasks) === true) {
+      return element;
+    }
+  });
+  task.subtasks = [...task.subtasks, ...filteredSteps];
   task.complete = false;
   return task;
 };

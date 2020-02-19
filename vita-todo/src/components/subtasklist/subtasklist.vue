@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="Steps">
     <article v-for="(task, idx) in this.subtasks" :key="idx">
       <SubTaskCard :task="task" :complete="complete" :mainTask="mainTask" />
     </article>
@@ -14,3 +14,9 @@ export default {
   components: { SubTaskCard }
 };
 </script>
+
+<style>
+.Steps {
+  grid-row: 3/4;
+}
+</style>

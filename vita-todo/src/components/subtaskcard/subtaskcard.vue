@@ -15,8 +15,6 @@
 import store from "../store/store";
 import * as type from "../store/mutationtypes/types";
 
-// v-if="this.task.complete === false"
-
 export default {
   name: "SubTaskCard",
   props: ["task", "complete", "label", "mainTask"],
@@ -27,7 +25,6 @@ export default {
   },
   methods: {
     toggleComplete(higherTask, subtask) {
-      console.log("METHOD", higherTask, subtask);
       store.dispatch({
         type: type.ToggleSubtaskComplete,
         editedTask: subtask,

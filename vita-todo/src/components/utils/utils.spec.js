@@ -242,11 +242,23 @@ describe.only("Add Steps to existing task", () => {
     id: 5
   };
 
+  const loneFour = {
+    task: "Test5",
+    subtasks: [
+      { name: "Step one", complete: true },
+      { name: "Step two", complete: true },
+      { name: "Step three", complete: true }
+    ],
+    complete: true,
+    id: 5
+  };
+
   const firstSteps = "step one, step two, step three";
 
   const newSteps = "step one, step two, step three";
   const stepsTwo = "step four, step five, step six";
   const stepsThree = "step four, step five, step six";
+  const stepsFour = "step three, step four, step five, step six";
 
   it("returns an object", () => {
     expect(addSteps(taskOne, firstSteps)).to.be.an("object");
@@ -281,6 +293,21 @@ describe.only("Add Steps to existing task", () => {
   });
   it("Changes a 'completed' main task to incomplete, when new incomplete steps are added", () => {
     expect(addSteps(loneThree, stepsThree)).to.eql({
+      task: "Test5",
+      subtasks: [
+        { name: "Step one", complete: true },
+        { name: "Step two", complete: true },
+        { name: "Step three", complete: true },
+        { name: "Step four", complete: false },
+        { name: "Step five", complete: false },
+        { name: "Step six", complete: false }
+      ],
+      complete: false,
+      id: 5
+    });
+  });
+  it("Makes sure no steps are duplicated", () => {
+    expect(addSteps(loneFour, stepsFour)).to.eql({
       task: "Test5",
       subtasks: [
         { name: "Step one", complete: true },
