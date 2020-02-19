@@ -22,7 +22,8 @@
           submitTask({
             task: grammarBro(newTask).name,
             subtasks: splitTasks(taskSteps),
-            complete: false
+            complete: false,
+            id: count
           })
         "
         class="TaskSubmit"
@@ -59,13 +60,15 @@ export default {
     return {
       addToggle: false,
       newTask: "",
-      taskSteps: "",
-      promptToggle: false
+      taskSteps: ""
     };
   },
   computed: mapState({
     tasks() {
       return store.state.tasks;
+    },
+    count() {
+      return store.state.count;
     }
   }),
   methods: {
@@ -74,7 +77,10 @@ export default {
     submitTask(addition) {
       this.newTask = "";
       this.taskSteps = "";
-      setTimeout(() => (this.addToggle = false), 200);
+      store.dispatch({
+        type: type.Increment
+      }),
+        setTimeout(() => (this.addToggle = false), 200);
       setTimeout(
         () =>
           store.dispatch({

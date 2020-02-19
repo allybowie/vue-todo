@@ -12,6 +12,8 @@ const splitTasks = subtaskString => {
   });
 };
 
+// const searchTasks = task => {};
+
 const flipMainTaskComplete = task => {
   task.complete = !task.complete;
   task.subtasks.forEach(subtask => {
@@ -47,4 +49,5 @@ module.exports = {
   grammarBro,
   flipMainTaskComplete,
   flipSubtaskComplete
+  // searchTasks
 };

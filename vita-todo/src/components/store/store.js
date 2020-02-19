@@ -11,7 +11,8 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   state: {
-    tasks: []
+    tasks: [],
+    count: 0
   },
   actions: {
     add(context, payload) {
@@ -22,15 +23,21 @@ const store = new Vuex.Store({
     },
     toggleSubtaskComplete(context, payload) {
       context.commit("toggleSubtaskComplete", payload);
+    },
+    increment(context, payload) {
+      context.commit("increment", payload);
     }
   },
   mutations: {
     add(state, payload) {
       state.tasks = [...state.tasks, payload.addedTask];
     },
+    increment(state) {
+      state.count++;
+    },
     toggleTaskComplete(state, payload) {
       const updates = state.tasks.map(task => {
-        if (task.task === payload.task) {
+        if (task === payload) {
           return flipMainTaskComplete(task);
         }
         return task;
@@ -42,7 +49,6 @@ const store = new Vuex.Store({
         payload.mainTask,
         payload.editedTask.name
       );
-      console.log("UPDATES", updatedTask);
 
       const finalUpdates = state.tasks.map(task => {
         if (task.task === payload.mainTask) {
@@ -50,7 +56,6 @@ const store = new Vuex.Store({
         }
         return task;
       });
-      console.log("FINAL UPDATES", finalUpdates);
       state.tasks = [...finalUpdates];
     }
   }

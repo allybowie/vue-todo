@@ -4,6 +4,7 @@ const {
   grammarBro,
   flipMainTaskComplete,
   flipSubtaskComplete
+  // searchTasks
 } = require("./utils");
 const {
   incomplete,
@@ -14,7 +15,8 @@ const {
   incompleteSix,
   incompleteSeven,
   incompleteEight,
-  incompleteNine
+  incompleteNine,
+  incompleteTen
 } = require("./testdata");
 
 //Split Tasks
@@ -93,7 +95,7 @@ describe("Flip the 'Complete' status of a task and all of its subtasks", () => {
   });
 });
 
-describe.only("Flip the 'Completed' status of a single subtask", () => {
+describe("Flip the 'Completed' status of a single subtask", () => {
   it("returns an object", () => {
     expect(flipSubtaskComplete(incomplete, "First subtask")).to.be.an("object");
   });
@@ -143,3 +145,7 @@ describe.only("Flip the 'Completed' status of a single subtask", () => {
     });
   });
 });
+
+// describe("Search an array and run flip the complete status on a task with matching ID", () => {
+//   it("returns ", () => {});
+// });
