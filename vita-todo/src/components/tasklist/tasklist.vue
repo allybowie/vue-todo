@@ -14,7 +14,7 @@
       <button
         @click.prevent="
           submitTask({
-            task: grammarBro(newTask).name,
+            name: grammarBro(newTask).name,
             subtasks: splitTasks(taskSteps),
             complete: false,
             id: count

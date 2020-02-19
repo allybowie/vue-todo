@@ -1,7 +1,8 @@
 <template>
   <div class="TaskCard">
     <p :class="{ 'is-checked': this.task.complete }" id="MainTask">
-      {{ this.task.task }}
+      <button class="DeleteButton" @click="handleDelete(task)">Delete</button>
+      {{ this.task.name }}
     </p>
     <input
       class="TaskCheck"
@@ -36,7 +37,7 @@
 import SubTaskList from "../subtasklist/subtasklist";
 import store from "../store/store";
 import * as type from "../store/mutationtypes/types";
-const { addSteps, splitTasks } = require("../utils/utils");
+const { addSteps, splitTasks, deleteTask } = require("../utils/utils");
 
 export default {
   name: "TaskCard",
@@ -51,6 +52,7 @@ export default {
   methods: {
     addSteps,
     splitTasks,
+    deleteTask,
     toggleComplete(task) {
       store.dispatch({
         type: type.ToggleTaskComplete,
@@ -60,12 +62,20 @@ export default {
     handleSubmit(currentTask, updates) {
       const finalTask = addSteps(currentTask, updates);
       store.state.tasks = store.state.tasks.map(element => {
-        if (element.task === currentTask.task) {
+        if (element.name === currentTask.name) {
           return finalTask;
         }
         return element;
       });
       this.newSteps = "";
+    },
+    handleDelete(task) {
+      const updatedTasks = deleteTask(store.state.tasks, task);
+      console.log("NEW TASK ARRAY", updatedTasks);
+      store.dispatch({
+        type: type.Delete,
+        newTasks: updatedTasks
+      });
     }
   }
 };
@@ -82,7 +92,7 @@ export default {
   background-color: rgb(207, 207, 207);
   display: grid;
   grid-template-columns: auto 10%;
-  grid-template-rows: 100px, 100px, auto;
+  grid-template-rows: 20px 100px, 100px, auto;
   margin-bottom: 10px;
 }
 

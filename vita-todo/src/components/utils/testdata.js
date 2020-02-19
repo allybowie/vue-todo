@@ -1,5 +1,5 @@
 const incomplete = {
-  task: "Test",
+  name: "Test",
   subtasks: [
     { name: "First subtask", complete: false },
     { name: "Second subtask", complete: false }
@@ -7,7 +7,7 @@ const incomplete = {
   complete: false
 };
 const incompleteTwo = {
-  task: "Test",
+  name: "Test",
   subtasks: [
     { name: "First subtask", complete: false },
     { name: "Second subtask", complete: false }
@@ -15,7 +15,7 @@ const incompleteTwo = {
   complete: false
 };
 const incompleteThree = {
-  task: "Test",
+  name: "Test",
   subtasks: [
     { name: "First subtask", complete: true },
     { name: "Second subtask", complete: true }
@@ -23,7 +23,7 @@ const incompleteThree = {
   complete: true
 };
 const incompleteFour = {
-  task: "Test",
+  name: "Test",
   subtasks: [
     { name: "First subtask", complete: true },
     { name: "Second subtask", complete: false }
@@ -32,7 +32,7 @@ const incompleteFour = {
 };
 
 const incompleteFive = {
-  task: "Test",
+  name: "Test",
   subtasks: [
     { name: "First subtask", complete: true },
     { name: "Second subtask", complete: false }
@@ -41,7 +41,7 @@ const incompleteFive = {
 };
 
 const incompleteSix = {
-  task: "Test",
+  name: "Test",
   subtasks: [
     { name: "First subtask", complete: false },
     { name: "Second subtask", complete: false }
@@ -50,7 +50,7 @@ const incompleteSix = {
 };
 
 const incompleteSeven = {
-  task: "Test",
+  name: "Test",
   subtasks: [
     { name: "First subtask", complete: true },
     { name: "Second subtask", complete: false }
@@ -59,7 +59,7 @@ const incompleteSeven = {
 };
 
 const incompleteEight = {
-  task: "Test",
+  name: "Test",
   subtasks: [
     { name: "First subtask", complete: true },
     { name: "Second subtask", complete: true }
@@ -68,23 +68,13 @@ const incompleteEight = {
 };
 
 const incompleteNine = {
-  task: "Test",
+  name: "Test",
   subtasks: [
     { name: "First subtask", complete: false },
     { name: "Second subtask", complete: false }
   ],
   complete: false
 };
-
-// const incompleteTen = {
-//   task: "Test",
-//   subtasks: [
-//     { name: "First subtask", complete: false },
-//     { name: "Second subtask", complete: false }
-//   ],
-//   complete: false,
-//   id: 0
-// };
 
 module.exports = {
   incomplete,

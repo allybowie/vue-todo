@@ -14,7 +14,7 @@ const splitTasks = subtaskString => {
 
 const isTaskUnique = (newTask, stateTasks) => {
   const identicalTask = stateTasks.filter(element => {
-    return element.task === newTask.task;
+    return element.name === newTask.name;
   });
   if (identicalTask.length > 0) return false;
 
@@ -73,11 +73,21 @@ const addSteps = (task, steps) => {
   return task;
 };
 
+const deleteTask = (stateTasks, removal) => {
+  const filtered = stateTasks.filter(element => {
+    if (element.name !== removal.name) {
+      return element;
+    }
+  });
+  return filtered;
+};
+
 module.exports = {
   splitTasks,
   grammarBro,
   flipMainTaskComplete,
   flipSubtaskComplete,
   isTaskUnique,
-  addSteps
+  addSteps,
+  deleteTask
 };

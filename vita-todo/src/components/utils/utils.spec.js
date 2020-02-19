@@ -5,7 +5,8 @@ const {
   flipMainTaskComplete,
   flipSubtaskComplete,
   isTaskUnique,
-  addSteps
+  addSteps,
+  deleteTask
 } = require("./utils");
 const {
   incomplete,
@@ -16,8 +17,7 @@ const {
   incompleteSix,
   incompleteSeven,
   incompleteEight,
-  incompleteNine,
-  incompleteTen
+  incompleteNine
 } = require("./testdata");
 
 //Split Tasks
@@ -70,7 +70,7 @@ describe("Flip the 'Complete' status of a task and all of its subtasks", () => {
   });
   it("returns an object with the keys 'task', 'subtasks', 'complete'", () => {
     expect(flipMainTaskComplete(incomplete)).to.contain.all.keys([
-      "task",
+      "name",
       "complete",
       "subtasks"
     ]);
@@ -107,7 +107,7 @@ describe("Flip the 'Completed' status of a single subtask", () => {
   });
   it("flips the 'completed' status of the correct subtask", () => {
     expect(flipSubtaskComplete(incompleteFive, "Second subtask")).to.eql({
-      task: "Test",
+      name: "Test",
       subtasks: [
         { name: "First subtask", complete: true },
         { name: "Second subtask", complete: true }
@@ -117,7 +117,7 @@ describe("Flip the 'Completed' status of a single subtask", () => {
   });
   it("completes the main task is all subtasks are complete", () => {
     expect(flipSubtaskComplete(incompleteSeven, "Second subtask")).to.eql({
-      task: "Test",
+      name: "Test",
       subtasks: [
         { name: "First subtask", complete: true },
         { name: "Second subtask", complete: true }
@@ -127,7 +127,7 @@ describe("Flip the 'Completed' status of a single subtask", () => {
   });
   it("unmarks the main task as completed if a completed subtask is unchecked", () => {
     expect(flipSubtaskComplete(incompleteEight, "Second subtask")).to.eql({
-      task: "Test",
+      name: "Test",
       subtasks: [
         { name: "First subtask", complete: true },
         { name: "Second subtask", complete: false }
@@ -137,7 +137,7 @@ describe("Flip the 'Completed' status of a single subtask", () => {
   });
   it("doesn't change the status of the main task if one out of two subtasks becomes true", () => {
     expect(flipSubtaskComplete(incompleteNine, "Second subtask")).to.eql({
-      task: "Test",
+      name: "Test",
       subtasks: [
         { name: "First subtask", complete: false },
         { name: "Second subtask", complete: true }
@@ -149,14 +149,14 @@ describe("Flip the 'Completed' status of a single subtask", () => {
 
 describe("Search an array of tasks and return true if a task with matching name is found", () => {
   const uniqueTask = {
-    task: "Test5",
+    name: "Test5",
     subtasks: [],
     complete: false,
     id: 5
   };
 
   const copycatTask = {
-    task: "Test0",
+    name: "Test0",
     subtasks: [],
     complete: false,
     id: 6
@@ -164,31 +164,31 @@ describe("Search an array of tasks and return true if a task with matching name 
 
   const currentArray = [
     {
-      task: "Test0",
+      name: "Test0",
       subtasks: [],
       complete: false,
       id: 0
     },
     {
-      task: "Test1",
+      name: "Test1",
       subtasks: [],
       complete: false,
       id: 1
     },
     {
-      task: "Test2",
+      name: "Test2",
       subtasks: [],
       complete: false,
       id: 2
     },
     {
-      task: "Test3",
+      name: "Test3",
       subtasks: [],
       complete: false,
       id: 3
     },
     {
-      task: "Test4",
+      name: "Test4",
       subtasks: [],
       complete: false,
       id: 4
@@ -205,23 +205,23 @@ describe("Search an array of tasks and return true if a task with matching name 
   });
 });
 
-describe.only("Add Steps to existing task", () => {
+describe("Add Steps to existing task", () => {
   const taskOne = {
-    task: "Test5",
+    name: "Test5",
     subtasks: [],
     complete: false,
     id: 5
   };
 
   const loneTask = {
-    task: "Test5",
+    name: "Test5",
     subtasks: [],
     complete: false,
     id: 5
   };
 
   const loneTwo = {
-    task: "Test5",
+    name: "Test5",
     subtasks: [
       { name: "Step one", complete: false },
       { name: "Step two", complete: false },
@@ -232,7 +232,7 @@ describe.only("Add Steps to existing task", () => {
   };
 
   const loneThree = {
-    task: "Test5",
+    name: "Test5",
     subtasks: [
       { name: "Step one", complete: true },
       { name: "Step two", complete: true },
@@ -243,7 +243,7 @@ describe.only("Add Steps to existing task", () => {
   };
 
   const loneFour = {
-    task: "Test5",
+    name: "Test5",
     subtasks: [
       { name: "Step one", complete: true },
       { name: "Step two", complete: true },
@@ -266,7 +266,7 @@ describe.only("Add Steps to existing task", () => {
 
   it("returns the original task but with steps added", () => {
     expect(addSteps(loneTask, newSteps)).to.eql({
-      task: "Test5",
+      name: "Test5",
       subtasks: [
         { name: "Step one", complete: false },
         { name: "Step two", complete: false },
@@ -278,7 +278,7 @@ describe.only("Add Steps to existing task", () => {
   });
   it("Does not delete previously existing steps", () => {
     expect(addSteps(loneTwo, stepsTwo)).to.eql({
-      task: "Test5",
+      name: "Test5",
       subtasks: [
         { name: "Step one", complete: false },
         { name: "Step two", complete: false },
@@ -293,7 +293,7 @@ describe.only("Add Steps to existing task", () => {
   });
   it("Changes a 'completed' main task to incomplete, when new incomplete steps are added", () => {
     expect(addSteps(loneThree, stepsThree)).to.eql({
-      task: "Test5",
+      name: "Test5",
       subtasks: [
         { name: "Step one", complete: true },
         { name: "Step two", complete: true },
@@ -308,7 +308,7 @@ describe.only("Add Steps to existing task", () => {
   });
   it("Makes sure no steps are duplicated", () => {
     expect(addSteps(loneFour, stepsFour)).to.eql({
-      task: "Test5",
+      name: "Test5",
       subtasks: [
         { name: "Step one", complete: true },
         { name: "Step two", complete: true },
@@ -320,5 +320,84 @@ describe.only("Add Steps to existing task", () => {
       complete: false,
       id: 5
     });
+  });
+});
+
+describe.only("DeleteTask: Will remove the input task from an array", () => {
+  const currentArrayOne = [
+    {
+      name: "Test0",
+      subtasks: [],
+      complete: false,
+      id: 0
+    },
+    {
+      name: "Test1",
+      subtasks: [],
+      complete: false,
+      id: 1
+    },
+    {
+      name: "Test2",
+      subtasks: [],
+      complete: false,
+      id: 2
+    },
+    {
+      name: "Test3",
+      subtasks: [],
+      complete: false,
+      id: 3
+    },
+    {
+      name: "Test4",
+      subtasks: [],
+      complete: false,
+      id: 4
+    }
+  ];
+
+  const taskToDelete = {
+    name: "Test4",
+    subtasks: [],
+    complete: false,
+    id: 4
+  };
+
+  const finalArray = deleteTask(currentArrayOne, taskToDelete);
+
+  it("returns an array", () => {
+    expect(finalArray).to.be.an("array");
+  });
+  it("an array with length of one less than the original array", () => {
+    expect(finalArray).to.be.have.length(4);
+  });
+  it("does not contain the task to be removed", () => {
+    expect(finalArray).to.eql([
+      {
+        name: "Test0",
+        subtasks: [],
+        complete: false,
+        id: 0
+      },
+      {
+        name: "Test1",
+        subtasks: [],
+        complete: false,
+        id: 1
+      },
+      {
+        name: "Test2",
+        subtasks: [],
+        complete: false,
+        id: 2
+      },
+      {
+        name: "Test3",
+        subtasks: [],
+        complete: false,
+        id: 3
+      }
+    ]);
   });
 });

@@ -26,11 +26,18 @@ const store = new Vuex.Store({
     },
     increment(context, payload) {
       context.commit("increment", payload);
+    },
+    delete(context, payload) {
+      context.commit("delete", payload);
     }
   },
   mutations: {
     add(state, payload) {
       state.tasks = [...state.tasks, payload.addedTask];
+    },
+    delete(state, payload) {
+      console.log("in mutation", payload);
+      state.tasks = [...payload.newTasks];
     },
     increment(state) {
       state.count++;
