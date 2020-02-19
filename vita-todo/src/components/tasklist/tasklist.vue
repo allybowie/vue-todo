@@ -3,9 +3,20 @@
     <button v-on:click="addToggle = !addToggle" class="AddButton">
       {{ addToggle ? "-" : "+" }}
     </button>
-    <form v-if="addToggle === true">
-      <input type="text" placeholder="Task" v-model="newTask" required />
-      <input type="text" placeholder="Steps" v-model="taskSteps" />
+    <form v-if="addToggle === true" class="Form">
+      <input
+        type="text"
+        placeholder="Task"
+        v-model="newTask"
+        required
+        class="Input"
+      />
+      <input
+        type="text"
+        placeholder="Steps"
+        v-model="taskSteps"
+        class="Input"
+      />
       <button
         @click.prevent="
           submitTask({
@@ -14,6 +25,7 @@
             complete: false
           })
         "
+        class="TaskSubmit"
       >
         Add Task
       </button>
@@ -47,7 +59,8 @@ export default {
     return {
       addToggle: false,
       newTask: "",
-      taskSteps: ""
+      taskSteps: "",
+      promptToggle: false
     };
   },
   computed: mapState({
@@ -81,17 +94,38 @@ export default {
   flex-direction: column;
   overflow: scroll;
   height: 400px;
+  margin-top: 20px;
 }
 
 .AddButton {
   border-radius: 50%;
   height: 50px;
   width: 50px;
-  font-size: 40px;
+  font-size: 30px;
   display: table-cell;
 }
 
 .AddButton:focus {
   outline: 0;
+}
+
+.Form {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.Input {
+  height: 20px;
+  width: 90%;
+  margin-bottom: 10px;
+  align-self: center;
+}
+
+.TaskSubmit {
+  width: 100px;
+  align-self: center;
+  background-color: darkgray;
+  box-shadow: 1mm 1mm 1mm darkgray;
 }
 </style>
