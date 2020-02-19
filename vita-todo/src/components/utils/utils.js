@@ -53,6 +53,7 @@ const flipSubtaskComplete = (fullTask, subtask) => {
 
 const addSteps = (task, steps) => {
   task.subtasks = [...task.subtasks, ...splitTasks(steps)];
+  task.complete = false;
   return task;
 };
 
