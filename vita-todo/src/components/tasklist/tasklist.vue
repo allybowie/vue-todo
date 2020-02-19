@@ -4,13 +4,7 @@
       {{ addToggle ? "-" : "+" }}
     </button>
     <form v-if="addToggle === true" class="Form">
-      <input
-        type="text"
-        placeholder="Task"
-        v-model="newTask"
-        required
-        class="Input"
-      />
+      <input type="text" placeholder="Task" v-model="newTask" class="Input" />
       <input
         type="text"
         placeholder="Steps"
@@ -51,7 +45,7 @@ import TaskCard from "../taskcard/taskcard";
 import store from "../store/store";
 import * as type from "../store/mutationtypes/types";
 import { mapState } from "vuex";
-const { splitTasks, grammarBro } = require("../utils/utils");
+const { splitTasks, grammarBro, isTaskUnique } = require("../utils/utils");
 
 export default {
   name: "TaskList",
@@ -74,21 +68,33 @@ export default {
   methods: {
     grammarBro,
     splitTasks,
+    isTaskUnique,
+    handleInvalid() {
+      alert("You cannot submit an empty task");
+    },
     submitTask(addition) {
+      console.log("new", this.newTask);
+      if (this.newTask.lenth === 0) {
+        alert("Please type a task");
+      }
       this.newTask = "";
       this.taskSteps = "";
-      store.dispatch({
-        type: type.Increment
-      }),
-        setTimeout(() => (this.addToggle = false), 200);
-      setTimeout(
-        () =>
-          store.dispatch({
-            type: type.Add,
-            addedTask: addition
-          }),
-        200
-      );
+      if (isTaskUnique(addition, store.state.tasks)) {
+        store.dispatch({
+          type: type.Increment
+        }),
+          setTimeout(() => (this.addToggle = false), 200);
+        setTimeout(
+          () =>
+            store.dispatch({
+              type: type.Add,
+              addedTask: addition
+            }),
+          200
+        );
+      } else {
+        alert("You cannot add a task that already exists");
+      }
     }
   }
 };

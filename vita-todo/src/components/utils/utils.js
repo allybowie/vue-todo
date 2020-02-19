@@ -12,7 +12,14 @@ const splitTasks = subtaskString => {
   });
 };
 
-// const searchTasks = task => {};
+const isTaskUnique = (newTask, stateTasks) => {
+  const identicalTask = stateTasks.filter(element => {
+    return element.task === newTask.task;
+  });
+  if (identicalTask.length > 0) return false;
+
+  return true;
+};
 
 const flipMainTaskComplete = task => {
   task.complete = !task.complete;
@@ -44,10 +51,16 @@ const flipSubtaskComplete = (fullTask, subtask) => {
   return fullTask;
 };
 
+const addSteps = (task, steps) => {
+  task.subtasks = [...task.subtasks, ...splitTasks(steps)];
+  return task;
+};
+
 module.exports = {
   splitTasks,
   grammarBro,
   flipMainTaskComplete,
-  flipSubtaskComplete
-  // searchTasks
+  flipSubtaskComplete,
+  isTaskUnique,
+  addSteps
 };
