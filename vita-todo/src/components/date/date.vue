@@ -6,6 +6,6 @@
 
 <script>
 export default {
-  name: "Date"
+  name: "TodaysDate"
 };
 </script>

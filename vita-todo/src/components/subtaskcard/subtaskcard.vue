@@ -16,6 +16,9 @@
 <script>
 import store from "../store/store";
 import * as type from "../store/mutationtypes/types";
+import { db } from "@/main";
+import firebase from "firebase/app";
+
 const { deleteTask } = require("../utils/utils");
 
 export default {
@@ -29,7 +32,10 @@ export default {
   methods: {
     deleteTask,
     handleStepDelete(step) {
-      const newTask = deleteTask(this.mainTask.subtasks, step);
+      const userID = firebase.auth().currentUser.uid;
+
+      const subtasks = [...this.mainTask.subtasks];
+      const newTask = deleteTask(subtasks, step);
 
       this.mainTask.subtasks = newTask;
 
@@ -40,6 +46,14 @@ export default {
       });
 
       this.mainTask.complete = taskComplete;
+      const newData = {
+        firstName: store.state.firstName,
+        surName: store.state.lastName,
+        tasks: [...store.state.tasks]
+      };
+      db.collection("UserCollection")
+        .doc(userID)
+        .set(newData);
     },
     toggleComplete(higherTask, subtask) {
       store.dispatch({

@@ -1,21 +1,14 @@
 <template>
   <div id="app">
     <div class="Content">
-      <Date />
-      <Header />
-      <TaskList />
+      <router-view />
     </div>
   </div>
 </template>
 
 <script>
-import Header from "./components/header/header";
-import Date from "./components/date/date";
-import TaskList from "./components/tasklist/tasklist";
-
 export default {
-  name: "App",
-  components: { Header, Date, TaskList }
+  name: "App"
 };
 </script>
 

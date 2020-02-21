@@ -61,16 +61,25 @@ export default {
     },
     handleSubmit(currentTask, updates) {
       const finalTask = addSteps(currentTask, updates);
-      store.state.tasks = store.state.tasks.map(element => {
-        if (element.name === currentTask.name) {
-          return finalTask;
+      const updatedTasks = (store.state.tasks = store.state.tasks.map(
+        element => {
+          if (element.name === currentTask.name) {
+            return finalTask;
+          }
+          return element;
         }
-        return element;
+      ));
+
+      store.dispatch({
+        type: type.Update,
+        updatedTasks: updatedTasks
       });
+
       this.newSteps = "";
     },
     handleDelete(task) {
-      const updatedTasks = deleteTask(store.state.tasks, task);
+      const taskArray = [...store.state.tasks];
+      const updatedTasks = deleteTask(taskArray, task);
       store.dispatch({
         type: type.Delete,
         newTasks: updatedTasks
